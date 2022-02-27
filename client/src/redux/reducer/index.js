@@ -6,7 +6,8 @@ import {
     GET_VIDEOGAME_BY_NAME,
     GET_VIDEOGAME_BY_ID,
     ORDER_VIDEOGAMES,
-    CLEAR_VIDEOGAME_DETAIL
+    CLEAR_VIDEOGAME_DETAIL,
+    CREATE_VIDEOGAME
 } from "../actions/actionsTypes";
 
 const initialState = {
@@ -20,17 +21,28 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     switch (type) {
         case GET_VIDEOGAMES:
-
+            const vg = [...payload].map(p=>Number.isInteger(p['id'])
+                ?p
+                :{...p, 
+                    genres: p.genres.map(g=> g.name)                
+                }
+            )
+           
             return {
                 ...state,
-                videogames: payload,
-                filteredVideogames: payload
+                videogames: vg,
+                filteredVideogames: vg
             }
 
         case GET_GENRES:
             return {
                 ...state,
-                genres: payload.map(g => g.name)
+                genres: payload.map(g => (
+                    {
+                        id: g.id,
+                        name:g.name
+                    })
+                )
             }
         
         case GET_VIDEOGAME_BY_NAME:
@@ -53,9 +65,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
             if(valuesFilter==='All'){
                 filtered = state.videogames;
             }else{
-                filtered = state.videogames.filter(v => {
-                    return v[keyFilter].includes(valuesFilter)
-                })
+                //hacer map de vaues filter
+                valuesFilter.map(value =>(
+                        filtered = [...filtered,state.videogames.filter(v => {
+                            return v[keyFilter].includes(value)
+                        })]  
+                    )
+                )
+                console.log(filtered)
             }
             return {
                 ...state,
@@ -109,6 +126,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 videogameDetail: {}
+            }
+        
+        case CREATE_VIDEOGAME:
+            return {
+                ...state,
+                videogameDetail: payload
             }
 
         default:

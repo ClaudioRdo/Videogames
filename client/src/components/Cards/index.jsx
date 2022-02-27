@@ -1,12 +1,19 @@
 import React from 'react';
 import Card from '../Card';
+import style from './Cards.module.css';
 
 const Cards = ({ videogames }) => {
+   // videogames.map(v=>console.log(v.genres))
     return (
-        <div>
+        <div className={style.cards}>
             {
                 videogames.map(v => 
-                    <Card name={v.name} genres={v.genres} id={v.id} key={v.id}/>
+                    <Card 
+                    name={v.name} 
+                    genres={v.genres}
+                    image={v.image} 
+                    id={v.id} 
+                    key={v.id}/>
                 )
             }
         </div>

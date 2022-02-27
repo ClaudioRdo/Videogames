@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../common';
+import style from './Pagination.module.css'
 
 const Pagination = ({ videogamesPerPage, allVideogames, paginate }) => {
 
@@ -11,14 +11,16 @@ const Pagination = ({ videogamesPerPage, allVideogames, paginate }) => {
     }
    
     return (
-        <div>
-            <ul>
+        <div className={style.pagination}>
+            <ul >
                
                 {
                     pages && 
                     pages.map(p =>(
                         <li key={p}>
-                            <Button onClick={(e)=>paginate(e,p)} value={p}/>
+                            <button onClick={(e)=>paginate(e,p)}>
+                                {p}
+                            </button>    
                         </li>
                     ))
                 }

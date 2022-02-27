@@ -39,14 +39,14 @@ const getVideogameById = async (req, res, next) => {
                     platforms: platformsVideogame,
                     genres: genresVideogame
                 }
-                console.log(detailVideogame)
+                
                 res.send(detailVideogame)
             } else {
                 res.status('404').send('The game is not found');
             }
         } else {
             const videogameDb = await Videogame.findByPk(idVideogame);
-
+            res.send(videogameDb);
         }
 
     } catch (error) {
@@ -64,7 +64,7 @@ const createVideogame = async (req, res, next) => {
             released,
             rating,
             genres,
-            platform
+            platforms
         } = req.body;
 
         const findVideogame = await Videogame.findOne({
@@ -72,6 +72,9 @@ const createVideogame = async (req, res, next) => {
                 name: name
             }
         });
+        
+        let pl = platforms.toString();
+        
         //consultar  si existe  videojueego en api 
         if (!findVideogame) {
             const create = await Videogame.create({
@@ -79,7 +82,7 @@ const createVideogame = async (req, res, next) => {
                 description,
                 released,
                 rating,
-                platform
+                platforms: pl
             })
 
             const addVideogame = await create.addGenre(genres);

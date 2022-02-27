@@ -37,7 +37,7 @@ const getVideogames = async (req, res, next) => {
 
 
             const videogamesDb = await Videogame.findAll({
-                attributes: ['id', 'name','rating'],
+                attributes: ['id', 'name','rating','platforms'],
                 include: [{
                     model: Genre,
                     attributes: ['name'],
@@ -46,7 +46,7 @@ const getVideogames = async (req, res, next) => {
                     }
                 }]
             });
-
+            
             res.send([...videogamesApi, ...videogamesDb]);
         } catch (error) {
             next(error)

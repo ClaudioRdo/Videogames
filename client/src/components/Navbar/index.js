@@ -4,24 +4,31 @@ import { useState } from 'react';
 import { filterByCurrentsVideogames, filteredVideogames, getVideogameByName, orderVideogames } from '../../redux/actions';
 import { Button, InputText, Label, Select } from '../common'
 import { Link } from 'react-router-dom';
+import style from './Navbar.module.css';
 
 const Navbar = () => {
 
   const [searchValue, setSearchValue] = useState();
+  const [genresValues, setGenresValues] = useState([]);
+
   const dispatch = useDispatch();
   const genres = useSelector(state => state.genres);
 
-
   const order = ['Ascending', 'Descending'];
   const currentsVideogames = ['Api', 'DataBase']
-  const genresSelect = genres;
+
+  const optionGenres = genres.map(g => (
+    <option value={g.name} key={g.id}>{g.name}</option>
+  ));
 
   const filterByGenre = (e) => {
     let key = e.target.name;
     let values = e.target.value;
-    // console.log(key);
-    // console.log(values)
-    dispatch(filteredVideogames(key, values));
+
+    setGenresValues([...genresValues, values]);
+
+    //******* PREGUNTAR GENRESVALUES *******/
+    dispatch(filteredVideogames(key, [...genresValues, values]));
   }
 
   const filterApiDatabase = (e) => {
@@ -36,7 +43,7 @@ const Navbar = () => {
     dispatch(orderVideogames(key, order))
   }
 
-  const handleChange = (e) => {
+  const handleChangeInputText = (e) => {
 
     setSearchValue(e.target.value)
   }
@@ -47,22 +54,21 @@ const Navbar = () => {
   }
 
   return (
-    <nav>
+    <nav className={style.nav}>
+      <div>{genresValues}</div>
       <form onSubmit={searchHandler}>
-        <Label value='Name:' id='search'/>
+        <Label value='Name:' id='search' />
         <InputText
           placeholder={'Name of videogame'}
-          onChange={handleChange}
+          onChange={handleChangeInputText}
           id='search' />
         <Button value='Search' />
       </form>
-
-      <span>Filter by Genre:</span>
-      <Select
-        name='genres'
-        options={genresSelect}
-        optionDefault={'All'}
-        onChange={filterByGenre} />
+      <label htmlFor='genres'>Genres:</label>
+      <select name='genres' defaultValue={''} onChange={filterByGenre} id='genres'>
+        <option value='' disabled>Select genres</option>
+        {optionGenres}
+      </select>
 
       <span>Filter By videogame existent:</span>
       <Select

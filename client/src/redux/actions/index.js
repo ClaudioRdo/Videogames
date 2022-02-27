@@ -9,7 +9,8 @@ import {
     GET_VIDEOGAMES, 
     GET_VIDEOGAME_BY_ID, 
     GET_VIDEOGAME_BY_NAME, 
-    ORDER_VIDEOGAMES
+    ORDER_VIDEOGAMES,
+    CREATE_VIDEOGAME
 } from './actionsTypes';
 
 export const getVideogames = () => {
@@ -34,16 +35,6 @@ export const getGenres = () => {
     }
 }
 
-export const getPlatforms = () => {
-    return async () => {
-        try {
-            
-        } catch (error) {
-            
-        }
-    }
-} 
-
 export const getVideogameById = (id) => {
     return async (dispatch) => {
         try {
@@ -67,6 +58,7 @@ export const getVideogameByName = (name) => {
 }
 
 export const filteredVideogames = (key, values) => {
+    
     return {
         type: FILTERED_VIDEOGAMES,
         payload: {
@@ -96,8 +88,19 @@ export const orderVideogames = (key, order) => {
     }
 }
 
-export const clearVideogameDetail= () => {
+export const clearVideogameDetail = () => {
     return {
         type: CLEAR_VIDEOGAME_DETAIL
+    }
+}
+
+export const createVideogame = (videogame) => {
+    return async (dispatch) => {
+       try {
+           const res = axios.post(`${constantsFront.GET_VIDEOGAME}`, videogame);
+           dispatch({type: CREATE_VIDEOGAME, payload: res.data})
+       } catch (error) {
+           console.log(error)
+       }
     }
 }
