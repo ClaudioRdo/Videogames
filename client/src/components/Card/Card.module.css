@@ -17,10 +17,12 @@
 }
 
 .card_title{
-    background: none;
+    position: absolute;
+    width: 100%;
 }
 
 .card:hover .card_title{
+    
     background-color: rgba(77, 25, 77, 0.5);
 }
 

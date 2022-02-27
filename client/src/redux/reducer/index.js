@@ -66,13 +66,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 filtered = state.videogames;
             }else{
                 //hacer map de vaues filter
+                console.log(valuesFilter)
                 valuesFilter.map(value =>(
-                        filtered = [...filtered,state.videogames.filter(v => {
+                        filtered = [...state.videogames].filter(v => {
                             return v[keyFilter].includes(value)
-                        })]  
+                        })  
                     )
                 )
-                console.log(filtered)
+                
             }
             return {
                 ...state,
