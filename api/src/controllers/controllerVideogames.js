@@ -14,7 +14,7 @@ const getVideogames = async (req, res, next) => {
             let videogamesApi=[];
             let videogames = await axios.get(`${BASE_URL}${GAMES_URL}?key=${API_KEY}`);
             
-            for(let i=0; i < 2; i++ ){
+            for(let i=0; i < 5; i++ ){
                 //videogames.push(await axios.get(videogames.data.next));
                 const currentVideogame = videogames.data.results.map(v => {
                     return {

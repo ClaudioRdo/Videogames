@@ -5,7 +5,7 @@ import { filterByCurrentsVideogames, filteredVideogames, getVideogameByName, ord
 import { Link } from 'react-router-dom';
 import style from './Navbar.module.css';
 
-const Navbar = () => {
+const Navbar = ({setCurrentPage}) => {
 
   const [searchValue, setSearchValue] = useState();
   const [genresValues, setGenresValues] = useState([]);
@@ -29,6 +29,7 @@ const Navbar = () => {
   ))
 
   const filterByGenre = (e) => {
+    setCurrentPage(1)
     let key = e.target.name;
     let values = e.target.value;
 
@@ -77,7 +78,6 @@ const Navbar = () => {
         <option value='' >Select Genres</option>
         {optionGenres}
       </select>
-      {genresValues}
 
       <label htmlFor='filterByOrigin'>Filter By videogame existent:</label>
       <select name='id' onChange={filterApiDatabase} className={style.selectNav} id='filterByOrigin'>

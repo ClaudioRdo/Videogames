@@ -23,7 +23,7 @@ const Home = () => {
       {allVideogames.length ? (
           <div className={style.wrapper}>
             <div className={style.navbar}>
-            <Navbar />
+            <Navbar setCurrentPage={setCurrentPage}/>
             </div>
             <div className={style.cards} >
             <Cards videogames={currentsVideogames} />

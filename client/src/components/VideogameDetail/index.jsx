@@ -30,8 +30,8 @@ const DetailVideogame = () => {
                         <h2>{detailVideogame.name}</h2>
                         <img src={detailVideogame.image || notImg} alt={detailVideogame.name} className={style.img}/>
                         <p> Description:</p><span className={style.span}>{detailVideogame.description}</span>
-                        <p>Realease date:</p><span className={style.span} >{detailVideogame.released}</span>
-                        <p>Rating:</p><span className={style.span}>{detailVideogame.rating}</span>
+                        <p>Realease date:</p><span className={style.span} >{detailVideogame.released? detailVideogame.released:''}</span>
+                        <p>Rating:</p><span className={style.span}>{detailVideogame.rating? detailVideogame.rating: ''}</span>
                         <p>Genres:</p>
                             <ul>{detailVideogame.genres.map(g => (
                                 <li key={g}>{g}</li>
