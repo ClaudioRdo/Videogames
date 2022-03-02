@@ -1,0 +1,108 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "title title"
+        "form-create item-create";
+    margin: 2em;
+}
+
+.wrapper h2{
+    grid-area: title;
+    margin: auto;
+    color: #5D8A66;
+}
+
+.wraper .formCreate{
+    grid-area: form-create;
+}
+
+.danger{
+    color:red;
+}
+
+.warning{
+    color: yellowgreen
+}
+
+.formCreate{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.formCreate label{
+    font-size: 17px;
+    color: #5D8A66
+}
+
+.formCreate input[type=text], select {
+    width: 50%;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+.formCreate textarea {
+    width: 50%;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+.formCreate button {
+    width: 50%;
+    background-color: #21445B;
+    color: white;
+    padding: 5px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.formCreate button:hover {
+    background-color: #45214A;
+}
+
+.formCreate button:disabled {
+    background-color: #eedff0;
+    color: black;
+    cursor: none;
+}
+
+.created{
+    background-color: #5D8A66;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+}
+  
+.created span{
+    margin-left: 15px;
+    color: #21445B;
+    font-weight: bold;
+}
+
+.created p{
+    color: #45214A;
+    font-weight: bolder;
+}
+
+.created h3{
+    margin: 10px auto;
+    font-size: 24px;
+}
+
+.created p span button{
+    background: transparent;
+    border: 2px solid #0099CC;
+    border-radius: 25%;
+    color: #591C21;
+}

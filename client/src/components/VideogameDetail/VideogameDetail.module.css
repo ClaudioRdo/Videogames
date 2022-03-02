@@ -1,0 +1,38 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.wrapper .img{
+    height: 500px;
+    max-width: 500px;
+    margin:0 auto;
+    border-radius: 10px;
+    
+}
+
+.wrapper h2{
+    color: #29c949;
+    font-size: 2em;
+    margin: 10px auto
+}
+.wrapper p{
+    padding: 10px;
+    color: #29c949;
+    font-size: 2em;
+    font-weight: bolder;
+    margin: 0;
+}
+
+.span{
+    color: aliceblue;
+    margin: 16px;
+    font-size: 1.2em;
+}
+
+.wrapper ul li{
+    color: aliceblue;
+    font-size: 1.2em;
+}

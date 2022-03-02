@@ -19,13 +19,15 @@ const getVideogames = async (req, res, next) => {
                 const currentVideogame = videogames.data.results.map(v => {
                     return {
                         id: v.id,
-                        name: v.name,
+                        name: v.name.toLowerCase(),
                         image: v.background_image,
                         rating: v.rating,
                         platforms: v.platforms
                             .map(p => p.platform.name),
                         genres: v.genres.map(g => {
-                            return g.name
+                            return{ 
+                                name:g.name
+                            }
                         })
                     }
                 });
@@ -57,7 +59,7 @@ const getVideogames = async (req, res, next) => {
             const videogamesApi = videogames.data.results.map(v => {
                 return {
                     id: v.id,
-                    name: v.name,
+                    name: v.name.toLowerCase(),
                     image: v.background_image,
                     rating: v.rating,
                     platforms: v.platforms

@@ -21,13 +21,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     switch (type) {
         case GET_VIDEOGAMES:
-            const vg = [...payload].map(p=>Number.isInteger(p['id'])
-                ?p
-                :{...p, 
-                    genres: p.genres.map(g=> g.name)                
+            const vg = [...payload].map(p => (
+                {
+                    ...p,
+                    genres: p.genres
+                        ? p.genres.map(g => g.name)
+                        : []
                 }
-            )
-           
+            ))
+
             return {
                 ...state,
                 videogames: vg,
@@ -40,21 +42,38 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 genres: payload.map(g => (
                     {
                         id: g.id,
-                        name:g.name
+                        name: g.name
                     })
                 )
             }
-        
+
         case GET_VIDEOGAME_BY_NAME:
+            const vgByName = [...payload].map(p => (
+                {
+                    ...p,
+                    genres: p.genres
+                        ? p.genres.map(g => g.name)
+                        : []
+                }
+            ))
             return {
                 ...state,
-                filteredVideogames: payload
-        }
+                filteredVideogames: vgByName
+            }
 
         case GET_VIDEOGAME_BY_ID:
+            const vgDetail = Number.isInteger(payload.id)
+                ? payload
+                : {
+                    ...payload,
+                    genres: payload.genres.map(g => g.name),
+                    platforms: payload.platforms.split(',')
+                }
+
+
             return {
                 ...state,
-                videogameDetail: payload
+                videogameDetail: vgDetail
 
             }
 
@@ -62,42 +81,51 @@ const rootReducer = (state = initialState, { type, payload }) => {
             const keyFilter = payload.key;
             const valuesFilter = payload.values;
             let filtered = []
-            if(valuesFilter==='All'){
-                filtered = state.videogames;
-            }else{
+            if (valuesFilter.includes('All')) {
+                filtered = [...state.videogames];
+            } else {
+                // filtered = [...state.videogames].filter(v => {
+                //     return v[keyFilter].includes(valuesFilter)
+                // }) 
+
                 //hacer map de vaues filter
-                console.log(valuesFilter)
-                valuesFilter.map(value =>(
-                        filtered = [...state.videogames].filter(v => {
-                            return v[keyFilter].includes(value)
-                        })  
-                    )
+                valuesFilter.map(value => (
+                    filtered = [...filtered, [...state.videogames].filter(v => {
+                        return v[keyFilter].includes(value)
+                    })]
                 )
-                
+                )
+
             }
             return {
                 ...state,
-                filteredVideogames: filtered
+                filteredVideogames: filtered.flat()
             }
-
+        //joan osborne
         case FILTER_CURRENT_VIDEOGAMES:
             const keyCurrent = payload.key;
             const valueCurrent = payload.value;
             let filter = [];
-            if(valueCurrent==='All'){
-                filter = state.videogames
-            }else{
-                if(valueCurrent === 'Api'){
-                    filter = state.videogames.filter(v=>{
+            if (valueCurrent === 'All') {
+                filter = [...state.videogames]
+            } else {
+                if (valueCurrent === 'Api') {
+                    filter = state.videogames.filter(v => {
                         return Number.isInteger(v[keyCurrent])
                     })
-                }else{
-                    filter = state.videogames.filter(v=>{
-                        return Number.isInteger(v[keyCurrent])
-                    })
+                } else {
+                    if (valueCurrent === 'DataBase') {
+                        filter = state.videogames.filter(v => {
+                            return !Number.isInteger(v[keyCurrent])
+                        })
+                    }
                 }
             }
-            return  {
+
+            if (filter.length === 0) {
+                filter = [...state.videogames]
+            }
+            return {
                 ...state,
                 filteredVideogames: filter
             }
@@ -111,7 +139,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
                     if (a[keyOrder] < b[keyOrder]) return -1;
                     if (a[keyOrder] > b[keyOrder]) return 1;
                     return 0;
-                }else{
+                } else {
                     if (a[keyOrder] > b[keyOrder]) return -1;
                     if (a[keyOrder] < b[keyOrder]) return 1;
                     return 0;
@@ -128,7 +156,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 videogameDetail: {}
             }
-        
+
         case CREATE_VIDEOGAME:
             return {
                 ...state,

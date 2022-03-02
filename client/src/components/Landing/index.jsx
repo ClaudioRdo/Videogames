@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../common';
+import style from './Landing.module.css'
+
 
 
 const Landing = () => {
   return (
-    <div>
+    <div className={style.wrapper}>
+      <div className={style.container}>
         <h1>Henry Videogames</h1>
         <Link to='/videogames'>
-            <Button value={'Enter'}/>
+            <button>Enter</button>
         </Link>
+      </div>
     </div>
   )
 }

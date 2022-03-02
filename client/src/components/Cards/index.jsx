@@ -3,8 +3,6 @@ import Card from '../Card';
 import style from './Cards.module.css';
 
 const Cards = ({ videogames }) => {
-    console.log(videogames)
-   // videogames.map(v=>console.log(v.genres))
     return (
         <div className={style.cards}>
             {

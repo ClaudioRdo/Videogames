@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { filterByCurrentsVideogames, filteredVideogames, getVideogameByName, orderVideogames } from '../../redux/actions';
-import { Button, InputText, Label, Select } from '../common'
 import { Link } from 'react-router-dom';
 import style from './Navbar.module.css';
 
@@ -14,12 +13,20 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const genres = useSelector(state => state.genres);
 
-  const order = ['Ascending', 'Descending'];
-  const currentsVideogames = ['Api', 'DataBase']
+  const order = ['Select Order','Ascending', 'Descending'];
+  const currentsVideogames = ['Select Origin','All','Api', 'DataBase']
 
   const optionGenres = genres.map(g => (
     <option value={g.name} key={g.id}>{g.name}</option>
   ));
+
+  const optionApiDatabase = currentsVideogames.map(op => (
+    <option value={op} key={op}>{op}</option>
+  ));
+
+  const optionOrders = order.map(op=>(
+    <option value={op} key={op}>{op}</option>
+  ))
 
   const filterByGenre = (e) => {
     let key = e.target.name;
@@ -34,6 +41,7 @@ const Navbar = () => {
   const filterApiDatabase = (e) => {
     let key = e.target.name;
     let value = e.target.value;
+    value==='All'&& setGenresValues([])
     dispatch(filterByCurrentsVideogames(key, value))
   }
 
@@ -55,35 +63,38 @@ const Navbar = () => {
 
   return (
     <nav className={style.nav}>
-      <div>{genresValues}</div>
-      <form onSubmit={searchHandler}>
-        <Label value='Name:' id='search' />
-        <InputText
-          placeholder={'Name of videogame'}
-          onChange={handleChangeInputText}
-          id='search' />
-        <Button value='Search' />
+      <form onSubmit={searchHandler} className={style.formNav}>
+        <label htmlFor='search'>Name:</label>
+        <input type='text' 
+        onChange={handleChangeInputText}
+        id='search'
+        placeholder='Name of videogame'
+        autoComplete='off'/>
+        <button>Search</button>
       </form>
       <label htmlFor='genres'>Genres:</label>
-      <select name='genres' defaultValue={''} onChange={filterByGenre} id='genres'>
-        <option value='' disabled>Select genres</option>
+      <select name='genres' defaultValue={''} onChange={filterByGenre} id='genres' className={style.selectNav}>
+        <option value='' >Select Genres</option>
         {optionGenres}
       </select>
+      {genresValues}
 
-      <span>Filter By videogame existent:</span>
-      <Select
-        name='id'
-        options={currentsVideogames}
-        optionDefault={'All'}
-        onChange={filterApiDatabase} />
+      <label htmlFor='filterByOrigin'>Filter By videogame existent:</label>
+      <select name='id' onChange={filterApiDatabase} className={style.selectNav} id='filterByOrigin'>
+        {optionApiDatabase}
+      </select>
 
-      <span>Order by Rating:</span>
-      <Select name='rating' options={order} onChange={sortVideogames} />
+      <label htmlFor='rating'>Order by Rating:</label>
+      <select name='rating' onChange={sortVideogames} className={style.selectNav}>
+        {optionOrders}
+      </select>
 
-      <span>Order by Name:</span>
-      <Select name='name' options={order} onChange={sortVideogames} />
+      <label htmlFor='name'>Order by Name:</label>
+      <select name='name' onChange={sortVideogames} className={style.selectNav} id='name'>
+        {optionOrders}
+      </select>
       <Link to={'../videogame'}>
-        <Button value='Create Videogame' />
+        <button className={style.buttonNav}>Create Videogame</button>
       </Link>
     </nav>
   )

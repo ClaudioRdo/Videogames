@@ -15,7 +15,7 @@ const Pagination = ({ videogamesPerPage, allVideogames, paginate }) => {
             <ul >
                
                 {
-                    pages && 
+                    pages.length>1 && 
                     pages.map(p =>(
                         <li key={p}>
                             <button onClick={(e)=>paginate(e,p)}>

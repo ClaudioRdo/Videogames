@@ -45,7 +45,20 @@ const getVideogameById = async (req, res, next) => {
                 res.status('404').send('The game is not found');
             }
         } else {
-            const videogameDb = await Videogame.findByPk(idVideogame);
+            const videogameDb = await Videogame.findByPk(idVideogame,{
+                include: [{
+                    model: Genre,
+                    attributes: ['name'],
+                    through: {
+                        attributes: [],
+                    }
+                }],
+                // attributes: ['name'],
+                //     through: {
+                //         attributes: []
+                //     }
+            }
+            );
             res.send(videogameDb);
         }
 
