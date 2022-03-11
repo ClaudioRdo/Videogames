@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { filterByCurrentsVideogames, filteredVideogames, getVideogameByName, orderVideogames } from '../../redux/actions';
 import { Link } from 'react-router-dom';
+import Select from '../commons/Select.jsx';
+import { optionsFilterByOrigin, optionsOrders } from '../../helpers/valueOptions';
 import style from './Navbar.module.css';
 
 const Navbar = ({setCurrentPage}) => {
@@ -14,19 +16,10 @@ const Navbar = ({setCurrentPage}) => {
   const genres = useSelector(state => state.genres);
 
   const order = ['Select Order','Ascending', 'Descending'];
-  const currentsVideogames = ['Select Origin','All','Api', 'DataBase']
 
   const optionGenres = genres.map(g => (
     <option value={g.name} key={g.id}>{g.name}</option>
   ));
-
-  const optionApiDatabase = currentsVideogames.map(op => (
-    <option value={op} key={op}>{op}</option>
-  ));
-
-  const optionOrders = order.map(op=>(
-    <option value={op} key={op}>{op}</option>
-  ))
 
   const filterByGenre = (e) => {
     setCurrentPage(1)
@@ -80,19 +73,31 @@ const Navbar = ({setCurrentPage}) => {
       </select>
 
       <label htmlFor='filterByOrigin'>Filter By videogame existent:</label>
-      <select name='id' onChange={filterApiDatabase} className={style.selectNav} id='filterByOrigin'>
-        {optionApiDatabase}
-      </select>
+      <Select 
+      options={optionsFilterByOrigin}
+      name={'filterByOrigin'} 
+      id={'filterByOrigin'}
+      onChange={filterApiDatabase}
+      className={style.selectNav}
+      />
 
       <label htmlFor='rating'>Order by Rating:</label>
-      <select name='rating' onChange={sortVideogames} className={style.selectNav}>
-        {optionOrders}
-      </select>
+      <Select
+      options={optionsOrders}
+      name={'rating'}
+      id={'rating'}
+      onChange={sortVideogames}
+      className={style.selectNav}
+      />
 
       <label htmlFor='name'>Order by Name:</label>
-      <select name='name' onChange={sortVideogames} className={style.selectNav} id='name'>
-        {optionOrders}
-      </select>
+      <Select
+      options={optionsOrders}
+      name={'name'}
+      id={'name'}
+      onChange={sortVideogames}
+      className={style.selectNav}
+      />
       <Link to={'../videogame'}>
         <button className={style.buttonNav}>Create Videogame</button>
       </Link>
