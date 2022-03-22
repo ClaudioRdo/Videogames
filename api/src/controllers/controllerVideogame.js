@@ -59,6 +59,7 @@ const getVideogameById = async (req, res, next) => {
                 //     }
             }
             );
+            console.log('first')
             res.send(videogameDb);
         }
 
