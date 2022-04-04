@@ -9,6 +9,7 @@ import Landing from './components/Landing/index';
 import Home from './components/Home';
 import VideogameDetail from './components/VideogameDetail';
 import CreateVideogame from './components/CreateVideogame';
+import Map from './components/Map/Map';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
         <Route path ='/videogames' element={<Home/>}/>
         <Route exact path='/videogame/:idVideogame' element={<VideogameDetail/>}/>
         <Route path='/videogame' element={<CreateVideogame/>}/>
+        <Route path='/map' element={<Map/>}/>
       </Routes>
       
       
